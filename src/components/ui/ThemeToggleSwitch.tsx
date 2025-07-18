@@ -1,7 +1,13 @@
 import { useTheme } from "@/contexts/ThemeContext";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import React from "react";
+import React, { useEffect } from "react";
 import { StyleSheet, Switch, Text, View } from "react-native";
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withSpring,
+  withTiming,
+} from "react-native-reanimated";
 
 interface ThemeToggleSwitchProps {
   value: boolean;
@@ -14,12 +20,50 @@ export const ThemeToggleSwitch = ({
 }: ThemeToggleSwitchProps) => {
   const { colors } = useTheme();
 
+  // Animation values
+  const scale = useSharedValue(1);
+  const fadeIn = useSharedValue(0);
+  const iconRotate = useSharedValue(0);
+
+  useEffect(() => {
+    fadeIn.value = withTiming(1, { duration: 500 });
+    iconRotate.value = withSpring(value ? 360 : 0, {
+      damping: 15,
+      stiffness: 150,
+    });
+  }, [value]);
+
+  const containerAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      opacity: fadeIn.value,
+      transform: [{ scale: scale.value }],
+    };
+  });
+
+  const iconAnimatedStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ rotate: `${iconRotate.value}deg` }],
+    };
+  });
+
+  const handlePressIn = () => {
+    scale.value = withSpring(0.95, { damping: 15, stiffness: 200 });
+  };
+
+  const handlePressOut = () => {
+    scale.value = withSpring(1, { damping: 15, stiffness: 200 });
+  };
+
   return (
-    <View
+    <Animated.View
       style={[
         styles.container,
         { backgroundColor: colors.card, borderColor: colors.border },
+        containerAnimatedStyle,
       ]}
+      onTouchStart={handlePressIn}
+      onTouchEnd={handlePressOut}
+      onTouchCancel={handlePressOut}
     >
       <View style={styles.labelContainer}>
         <View
@@ -29,12 +73,14 @@ export const ThemeToggleSwitch = ({
             marginBottom: 6,
           }}
         >
-          <Ionicons
-            name={value ? "moon" : "sunny"}
-            size={20}
-            color={colors.primary}
-            style={{ marginRight: 8 }}
-          />
+          <Animated.View style={iconAnimatedStyle}>
+            <Ionicons
+              name={value ? "moon" : "sunny"}
+              size={24}
+              color={colors.primary}
+              style={{ marginRight: 12 }}
+            />
+          </Animated.View>
           <Text style={[styles.label, { color: colors.text }]}>
             {value ? "Dark Mode" : "Light Mode"}
           </Text>
@@ -53,7 +99,7 @@ export const ThemeToggleSwitch = ({
         thumbColor="#FFFFFF"
         ios_backgroundColor={colors.border}
       />
-    </View>
+    </Animated.View>
   );
 };
 
@@ -62,26 +108,27 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: 20,
-    borderRadius: 16,
+    padding: 24,
+    borderRadius: 20,
     borderWidth: 2,
-    marginVertical: 12,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 4,
+    marginVertical: 16,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.12,
+    shadowRadius: 12,
+    elevation: 6,
   },
   labelContainer: {
     flex: 1,
   },
   label: {
-    fontSize: 18,
-    fontWeight: "600",
+    fontSize: 20,
+    fontWeight: "700",
     marginBottom: 6,
     letterSpacing: 0.3,
   },
   description: {
-    fontSize: 14,
-    lineHeight: 20,
+    fontSize: 15,
+    lineHeight: 22,
+    letterSpacing: 0.2,
   },
 });

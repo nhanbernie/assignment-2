@@ -6,7 +6,7 @@ import React, {
   useEffect,
   useState,
 } from "react";
-
+import { mockProfiles } from "@/common/data/mockProfiles";
 export interface UserProfile {
   name: string;
   bio: string;
@@ -15,7 +15,10 @@ export interface UserProfile {
 
 interface ProfileContextType {
   profile: UserProfile;
+  profiles: UserProfile[];
+  selectedProfile: UserProfile | null;
   updateProfile: (profile: Partial<UserProfile>) => void;
+  selectProfile: (profile: UserProfile) => void;
   isLoading: boolean;
 }
 
@@ -42,6 +45,10 @@ interface ProfileProviderProps {
 
 export const ProfileProvider = ({ children }: ProfileProviderProps) => {
   const [profile, setProfile] = useState<UserProfile>(defaultProfile);
+  const [profiles] = useState<UserProfile[]>(mockProfiles);
+  const [selectedProfile, setSelectedProfile] = useState<UserProfile | null>(
+    null
+  );
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -71,8 +78,21 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
     }
   };
 
+  const selectProfile = (profile: UserProfile) => {
+    setSelectedProfile(profile);
+  };
+
   return (
-    <ProfileContext.Provider value={{ profile, updateProfile, isLoading }}>
+    <ProfileContext.Provider
+      value={{
+        profile,
+        profiles,
+        selectedProfile,
+        updateProfile,
+        selectProfile,
+        isLoading,
+      }}
+    >
       {children}
     </ProfileContext.Provider>
   );

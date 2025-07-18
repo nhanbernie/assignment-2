@@ -6,22 +6,26 @@ export const settingsPageStyles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    padding: 24,
+    padding: 28,
+    justifyContent: "space-between",
   },
   header: {
     alignItems: "center",
-    marginBottom: 32,
+    marginBottom: 40,
+    marginTop: 20,
   },
   title: {
-    fontSize: 28,
-    fontWeight: "bold",
+    fontSize: 32,
+    fontWeight: "800",
     textAlign: "center",
+    letterSpacing: -0.5,
   },
   settingsContainer: {
     flex: 1,
+    justifyContent: "center",
   },
   buttonContainer: {
-    marginTop: 32,
+    marginBottom: 20,
   },
   buttonRow: {
     flexDirection: "row",

@@ -5,24 +5,26 @@ export const editProfilePageStyles = StyleSheet.create({
     flex: 1,
   },
   content: {
-    padding: 24,
+    padding: 28,
     flexGrow: 1,
   },
   header: {
     alignItems: "center",
-    marginBottom: 32,
+    marginBottom: 40,
+    marginTop: 20,
   },
   title: {
-    fontSize: 28,
-    fontWeight: "bold",
+    fontSize: 32,
+    fontWeight: "800",
     textAlign: "center",
+    letterSpacing: -0.5,
   },
   form: {
     flex: 1,
   },
   buttonContainer: {
-    marginTop: 32,
-    gap: 16,
+    marginTop: 40,
+    gap: 20,
   },
   buttonRow: {
     flexDirection: "row",

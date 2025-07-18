@@ -2,16 +2,16 @@ import { StyleSheet } from "react-native";
 
 export const buttonStyles = StyleSheet.create({
   button: {
-    paddingHorizontal: 24,
-    paddingVertical: 16,
-    borderRadius: 16,
+    paddingHorizontal: 28,
+    paddingVertical: 18,
+    borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
-    minHeight: 56,
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    elevation: 4,
+    minHeight: 60,
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.25,
+    shadowRadius: 12,
+    elevation: 8,
   },
   buttonContent: {
     flexDirection: "row",
@@ -19,11 +19,11 @@ export const buttonStyles = StyleSheet.create({
     justifyContent: "center",
   },
   iconContainer: {
-    marginHorizontal: 8,
+    marginHorizontal: 10,
   },
   buttonText: {
-    fontSize: 16,
-    fontWeight: "600",
-    letterSpacing: 0.5,
+    fontSize: 17,
+    fontWeight: "700",
+    letterSpacing: 0.8,
   },
 });

@@ -10,12 +10,13 @@ export const profilePageStyles = StyleSheet.create({
     alignItems: "center",
   },
   content: {
-    padding: 24,
+    padding: 28,
     flexGrow: 1,
+    justifyContent: "center",
   },
   buttonContainer: {
-    marginTop: 32,
-    gap: 16,
+    marginTop: 40,
+    gap: 20,
   },
   button: {
     width: "100%",
